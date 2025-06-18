@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Support Form - Akash World</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Animate.css -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 50px 20px;
+            font-family: 'Segoe UI', sans-serif;
+            background: url("Customercare.jpeg") no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-container {
+            background: linear-gradient(135deg, rgba(0, 153, 255, 0.2), rgba(255, 255, 255, 0.1));
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 600px;
+            animation: fadeInUp 1s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .marquee {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            margin: -40px -40px 30px -40px;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ffcc70;
+        }
+
+        label {
+            margin-top: 15px;
+            color: #ffd;
+        }
+
+        input,
+        textarea,
+        button {
+            border-radius: 12px !important;
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .form-control::placeholder {
+            color: #ccc;
+        }
+
+        .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: #66ccff;
+            box-shadow: 0 0 10px #66ccff66;
+        }
+
+        button {
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: white;
+            border: none;
+            padding: 12px;
+            margin-top: 25px;
+            font-size: 16px;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(to left, #00c6ff, #0072ff);
+            box-shadow: 0 0 15px #00c6ff;
+        }
+
+        #status {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container animate__animated animate__zoomIn">
+        <div class="marquee">
+            <marquee>👋 Hello! I’m Akash – the developer and owner of this Amazon Clone.
+                🛠️ If you face any issues while using the clone, please don’t hesitate to reach out – we’ll definitely
+                find a solution for you.
+                💬 Got any problems or suggestions? Just let us know!
+                🤝 If you like our service, share it with others too!
+                ⭐ And don’t forget to rate your experience with us – your feedback means a lot!</marquee>
+        </div>
+
+        <h2>Customer Support – Akash World</h2>
+        <form id="support-form">
+            <div class="mb-3">
+                <label>Your Name</label>
+                <input type="text" class="form-control" name="from_name" placeholder="Enter your name" required />
+            </div>
+            <div class="mb-3">
+                <label>Your Email</label>
+                <input type="email" class="form-control" name="user_email" placeholder="Enter your email" required />
+            </div>
+            <div class="mb-3">
+                <label>Your Complaint</label>
+                <textarea class="form-control" name="message" rows="5" placeholder="Describe your issue..."
+                    required></textarea>
+            </div>
+            <div class="mb-3">
+                <label>Attach Screenshot / Image (Optional)</label>
+                <input type="file" class="form-control" id="fileInput" accept="image/*" />
+            </div>
+            <button type="submit" class="btn w-100">Submit Complaint</button>
+            <div id="status"></div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Form Logic -->
+    <script>
+        (function () {
+            emailjs.init("07vJmR6dq9c-yYlr5");
+        })();
+
+        const form = document.getElementById("support-form");
+        const fileInput = document.getElementById("fileInput");
+        const statusDiv = document.getElementById("status");
+
+        form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const file = fileInput.files[0];
+            let base64Image = "";
+
+            if (file) {
+                base64Image = await toBase64(file);
+            }
+
+            emailjs.send("service_8kmu2t8", "template_cvkwzsq", {
+                from_name: form.from_name.value,
+                user_email: form.user_email.value,
+                message: form.message.value,
+                image: base64Image
+            })
+                .then(() => {
+                    statusDiv.style.color = "#66ff99";
+                    statusDiv.innerText = "✅ Complaint sent successfully!";
+                    form.reset();
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    statusDiv.style.color = "#ff4444";
+                    statusDiv.innerText = "❌ Failed to send complaint.";
+                });
+        });
+
+        function toBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background-image: url("https://www.inoru.com/blog/wp-content/uploads/2021/07/Amazon-Clone-A-Breakthrough-Strategy-To-Promote-Your-Ecommerce-Business-2000-x-800_200kb-1.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-color: rgba(243, 240, 240, 0.9);
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 5% auto;
+      background-color: #ffffffea;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .product-img {
+      width: 40%;
+      border-radius: 15px;
+      border: 3px solid aqua;
+    }
+
+    .title {
+      font-size: 26px;
+      margin: 20px 0 10px;
+      color: #222;
+    }
+
+    .rating {
+      color: #f0a500;
+      font-size: 18px;
+    }
+
+    .details {
+      margin: 10px 0;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .price-badge {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: #00bfa6;
+      color: white;
+      padding: 10px 20px;
+      font-size: 22px;
+      border-radius: 30px;
+      font-weight: bold;
+    }
+
+    .actions {
+      margin-top: 20px;
+    }
+
+    .btn {
+      padding: 12px 25px;
+      margin: 10px;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-buy {
+      background-color: #ff6f61;
+      color: white;
+    }
+
+    .btn-buy:hover {
+      background-color: #e05b4f;
+    }
+
+    .btn-cart {
+      background-color: #0077ff;
+      color: white;
+    }
+
+    .btn-cart:hover {
+      background-color: #005ed1;
+    }
+
+    .btn-cart i {
+      margin-right: 8px;
+    }
+
+    select {
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid #ccc;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    .popup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #28a745;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      z-index: 999;
+      display: none;
+      font-size: 16px;
+    }
+
+    .popup.error {
+      background-color: #ff5722;
+    }
+
+    /* Marquee styling */
+    .marquee {
+      background-color: #333;
+      color: white;
+      padding: 10px 0;
+      font-size: 18px;
+      font-weight: bold;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Star Rating */
+    .rating-stars {
+      margin-top: 30px;
+    }
+
+    .stars i {
+      font-size: 30px;
+      color: gray;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .stars i.selected,
+    .stars i:hover {
+      color: gold;
+    }
+
+    #rating-msg {
+      margin-top: 10px;
+      font-size: 16px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Marquee -->
+  <div class="marquee">
+    <marquee>Welcome to Akash World! You can feel the better experience of the Amazon Clone on this page. Rate us!</marquee>
+  </div>
+
+  <!-- Popup -->
+  <div class="popup" id="popup"></div>
+
+  <!-- Main Product Card -->
+  <div class="container">
+    <img class="product-img" src="Girls.jpg" alt="AC Image" />
+
+    <h2 class="title">Naika's Woomen Wears With GoodLooking Colours</h2>
+
+    <div class="rating">★ 3.9 | 4,644 reviews | 2K+ bought</div>
+
+    <p class="details">
+      Silk | Good Looking | Dual Combo | Dew Clean Tech | 2024 Model <br>
+      Limited Time Deal: Save 36% <br>
+      FREE Delivery by Fri, 20 Jun | Paid Installation
+    </p>
+
+    <div class="price-badge">₹3000</div>
+
+    <div>
+      <label for="quantity">Select Quantity:</label>
+      <select id="quantity">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-buy" onclick="showPopup('Your product has been ordered!', false)">Buy Now</button>
+      <button class="btn btn-cart" onclick="showPopup('Added to cart!', true)">
+        <i class="fas fa-shopping-cart"></i>Add to Cart
+      </button>
+    </div>
+
+    <!-- Rating Section -->
+    <div class="rating-stars">
+      <h3>Rate This Product</h3>
+      <div class="stars" id="starContainer">
+        <i class="fas fa-star" onclick="rate(1)"></i>
+        <i class="fas fa-star" onclick="rate(2)"></i>
+        <i class="fas fa-star" onclick="rate(3)"></i>
+        <i class="fas fa-star" onclick="rate(4)"></i>
+        <i class="fas fa-star" onclick="rate(5)"></i>
+      </div>
+      <div id="rating-msg"></div>
+    </div>
+  </div>
+
+  <script>
+    function showPopup(message, isCart) {
+      const popup = document.getElementById('popup');
+      popup.textContent = message;
+      popup.classList.remove('error');
+      if (!isCart) {
+        popup.classList.add('error');
+      }
+      popup.style.display = 'block';
+
+      setTimeout(() => {
+        popup.style.display = 'none';
+      }, 2500);
+    }
+
+    function rate(starCount) {
+      const stars = document.querySelectorAll("#starContainer i");
+      stars.forEach((star, index) => {
+        if (index < starCount) {
+          star.classList.add("selected");
+        } else {
+          star.classList.remove("selected");
+        }
+      });
+      document.getElementById("rating-msg").textContent = `Thanks for rating us ${starCount} star${starCount > 1 ? "s" : ""}!`;
+    }
+  </script>
+</body>
+</html>
